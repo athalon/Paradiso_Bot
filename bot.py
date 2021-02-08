@@ -13,7 +13,7 @@ prefix = 'p!'
 DIRNAME = os.path.dirname(__file__)
 PREFIX_PATH = os.path.join(DIRNAME, 'data', 'prefix.txt')
 
-TOKEN = 'ODA3NjE4NjE2NDI5Mzc5NTg1.YB6ncg.GBoQEX550tNt3OzxLNBilh5UoAY'
+TOKEN = os.getenv("BOT_TOKEN")
 
 intents = discord.Intents.default()
 intents.members = True
