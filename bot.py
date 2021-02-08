@@ -21,6 +21,8 @@ intents.members = True
 client = commands.Bot(command_prefix=str(prefix), case_insensitive=True, intents=intents)
 client.remove_command('help')
 
+footer = "Paradiso | Made by: athalon#8654 and Walton The Walrus#5844"
+
 default_color = 0xd085ed
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -47,7 +49,7 @@ async def on_message(message):
             description = f"You can type `{client.command_prefix}help` for more info",
             color = default_color
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         embed.set_author(name="Hello!")
         await message.channel.send(embed=embed)
     await client.process_commands(message)
@@ -69,7 +71,7 @@ async def change_prefix(ctx, new_prefix='p!'):
             description = f"The prefix was changed to {prefix}",
             color = default_color
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await ctx.send(embed=embed)
         await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=f"{prefix}help"))
         print(f'The prefix was changed to {prefix}')
@@ -79,7 +81,7 @@ async def change_prefix(ctx, new_prefix='p!'):
             description = f"You may not have the needed permissions to run this command!",
             color = discord.Colour.red()
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
 
 # Shuts the bot down
 @client.command(description="Shuts the bot off (Admin only)")
@@ -92,7 +94,7 @@ async def shutdown(ctx):
             description = "Shutting down the bot...\n(This might take a few seconds)\nMessage athalon#8654 to get it back up!",
             color = default_color
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await ctx.send(embed=embed)
         sl(1)
         await ctx.bot.logout()
@@ -104,7 +106,7 @@ async def shutdown(ctx):
             description = "You may not have the needed permissions to run this command!",
             color = discord.Colour.red()
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await ctx.send(embed=embed)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -119,7 +121,7 @@ async def test(ctx):
         description = "Test successful!",
         color = default_color
     )
-    embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+    embed.set_footer(text=footer)
     await ctx.send(embed=embed)
     await ctx.send('Test successful!')
 
@@ -131,7 +133,7 @@ async def ping(ctx):
         description = f':ping_pong:Pong!\n```ini\n[{round(client.latency * 1000)}ms]\n```',
         color = default_color
     )
-    embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+    embed.set_footer(text=footer)
     await ctx.send(embed=embed)
 
 
@@ -157,7 +159,7 @@ async def test(ctx):
     )
     em.add_field(name = "**Syntax**", value=f"{prefix}test", inline=False)
     em.add_field(name="**Required Permissions**", value="None", inline=False)
-    em.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+    em.set_footer(text=footer)
     await ctx.send(embed=em)
 
 @help.command()
@@ -169,7 +171,7 @@ async def ping(ctx):
     )
     em.add_field(name = "**Syntax**", value=f"{prefix}ping", inline=False)
     em.add_field(name="**Required Permissions**", value="None", inline=False)
-    em.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+    em.set_footer(text=footer)
     await ctx.send(embed=em)
 
 @help.command()
@@ -181,7 +183,7 @@ async def server(ctx):
     )
     em.add_field(name = "**Syntax**", value=f"{prefix}server", inline=False)
     em.add_field(name="**Required Permissions**", value="None", inline=False)
-    em.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+    em.set_footer(text=footer)
     await ctx.send(embed=em)
 
 @help.command()
@@ -193,7 +195,7 @@ async def mute(ctx):
     )
     em.add_field(name = "**Syntax**", value=f"{prefix}mute <member> [reason]", inline=False)
     em.add_field(name="**Required Permissions**", value="Manage Roles", inline=False)
-    em.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+    em.set_footer(text=footer)
     await ctx.send(embed=em)
 
 @help.command()
@@ -205,7 +207,7 @@ async def unmute(ctx):
     )
     em.add_field(name = "**Syntax**", value=f"{prefix}unmute <member>", inline=False)
     em.add_field(name="**Required Permissions**", value="Manage Roles", inline=False)
-    em.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+    em.set_footer(text=footer)
     await ctx.send(embed=em)
 
 @help.command()
@@ -217,7 +219,7 @@ async def kick(ctx):
     )
     em.add_field(name = "**Syntax**", value=f"{prefix}kick <member> [reason]", inline=False)
     em.add_field(name="**Required Permissions**", value="Kick members", inline=False)
-    em.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+    em.set_footer(text=footer)
     await ctx.send(embed=em)
 
 @help.command()
@@ -229,7 +231,7 @@ async def ban(ctx):
     )
     em.add_field(name = "**Syntax**", value=f"{prefix}ban <member> [reason]", inline=False)
     em.add_field(name="**Required Permissions**", value="Ban members", inline=False)
-    em.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+    em.set_footer(text=footer)
     await ctx.send(embed=em)
 
 @help.command()
@@ -241,7 +243,7 @@ async def unban(ctx):
     )
     em.add_field(name = "**Syntax**", value=f"{prefix}unban <member_id>", inline=False)
     em.add_field(name="**Required Permissions**", value="Ban Members", inline=False)
-    em.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+    em.set_footer(text=footer)
     await ctx.send(embed=em)
 
 @help.command()
@@ -253,7 +255,7 @@ async def change_prefix(ctx):
     )
     em.add_field(name = "**Syntax**", value=f"{prefix}change_prefix <prefix>", inline=False)
     em.add_field(name="**Required Permissions**", value="Admin", inline=False)
-    em.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+    em.set_footer(text=footer)
     await ctx.send(embed=em)
 
 @help.command()
@@ -265,7 +267,7 @@ async def shutdown(ctx):
     )
     em.add_field(name = "**Syntax**", value=f"{prefix}shutdown", inline=False)
     em.add_field(name="**Required Permissions**", value="Admin", inline=False)
-    em.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+    em.set_footer(text=footer)
     await ctx.send(embed=em)
 
 @client.event
@@ -294,7 +296,7 @@ async def mute(ctx, member : discord.Member, *, reason='Not specified'):
             description = f"Muted {str(member)} for {reason}",
             color = default_color
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await ctx.send(embed=embed)
         embed_dm = discord.Embed(
             title = "Mute",
@@ -309,7 +311,7 @@ async def mute(ctx, member : discord.Member, *, reason='Not specified'):
             description = f"I can't mute bots :smile:",
             color = discord.Colour.red()
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await ctx.send(embed=embed)
         await ctx.send("I can't mute bots :smile:")
 
@@ -326,7 +328,7 @@ async def unmute(ctx, member : discord.Member):
                 description = f"Unmuted {str(member)}",
                 color = default_color
             )
-            embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+            embed.set_footer(text=footer)
             await ctx.send(embed=embed)
             embed_dm = discord.Embed(
                 title = "Mute",
@@ -341,7 +343,7 @@ async def unmute(ctx, member : discord.Member):
                 description = f"The member isn't muted",
                 color = discord.Colour.red()
             )
-            embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+            embed.set_footer(text=footer)
             await ctx.send(embed=embed)
     else:
         embed = discord.Embed(
@@ -349,7 +351,7 @@ async def unmute(ctx, member : discord.Member):
             description = f"I can't unmute bots because they can't be muted either :smile:",
             color = discord.Colour.red()
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await ctx.send(embed=embed)
 
 # Kicks a member
@@ -362,14 +364,14 @@ async def kick(ctx, member : discord.Member, *, reason="Not specified"):
             description = f"Kicked {str(member)} for {reason}",
             color = default_color
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await ctx.send(embed=embed)
         embed_dm = discord.Embed(
             title = "Kick",
             description = f"You have been kicked by a moderator for: {reason}\nServer: Paradise",
             color = default_color
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await member.send(embed=embed_dm)
         await member.kick(reason=reason)
     else:
@@ -378,7 +380,7 @@ async def kick(ctx, member : discord.Member, *, reason="Not specified"):
             description = "I can't kick bots :smile:",
             color = discord.Colour.red()
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await ctx.send(embed=embed)
         await ctx.send("I can't kick bots :smile:")
 
@@ -392,14 +394,14 @@ async def ban(ctx, member : discord.Member, *, reason="Not specified"):
             description = f"Banned {str(member)} for {reason}",
             color = default_color
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await ctx.send(embed=embed)
         embed_dm = discord.Embed(
             title = "Ban",
             description = f"You have been banned by a moderator for: {reason}\nServer: Paradise",
             color = default_color
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await member.send(embed=embed_dm)
         await member.ban(reason=reason)
     else:
@@ -408,7 +410,7 @@ async def ban(ctx, member : discord.Member, *, reason="Not specified"):
             description = "I can't kick bots :smile:",
             color = discord.Colour.red()
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await ctx.send(embed=embed)
         await ctx.send("I can't kick bots :smile:")
 
@@ -424,7 +426,7 @@ async def unban(ctx, id: int):
             description = f"Unbanned {str(user)}",
             color = default_color
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await ctx.send(embed=embed)
     except:
         embed = discord.Embed(
@@ -432,7 +434,7 @@ async def unban(ctx, id: int):
             description = "That user is not banned",
             color = discord.Colour.red()
         )
-        embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+        embed.set_footer(text=footer)
         await ctx.send(embed=embed)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
