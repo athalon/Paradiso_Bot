@@ -276,7 +276,7 @@ async def on_member_join(member):
         description = f"Welcome {str(member)} to Paradise! We hope you have a great stay",
         color = default_color
     )
-    embed.add_footer(text="Paradiso Bot | Made by: athalon#8654")
+    embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
     await client.get_channel(763093985110786088).send(embed=embed)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
