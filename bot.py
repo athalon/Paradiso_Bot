@@ -123,7 +123,6 @@ async def test(ctx):
     )
     embed.set_footer(text=footer)
     await ctx.send(embed=embed)
-    await ctx.send('Test successful!')
 
 # Command to get the latency(ping) of the bot/api
 @client.command(description="Displays the bot's latency(ping)")
