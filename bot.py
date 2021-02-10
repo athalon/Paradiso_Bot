@@ -123,6 +123,7 @@ async def test(ctx):
     )
     embed.set_footer(text=footer)
     await ctx.send(embed=embed)
+    await ctx.send('Test successful!')
 
 # Command to get the latency(ping) of the bot/api
 @client.command(description="Displays the bot's latency(ping)")
@@ -276,7 +277,7 @@ async def on_member_join(member):
         description = f"Welcome {str(member)} to Paradise! We hope you have a great stay",
         color = default_color
     )
-    embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
+    embed.add_footer(text="Paradiso Bot | Made by: athalon#8654")
     await client.get_channel(763093985110786088).send(embed=embed)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -435,6 +436,38 @@ async def unban(ctx, id: int):
         )
         embed.set_footer(text=footer)
         await ctx.send(embed=embed)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Event Creation#
+
+@client.command()
+@commands.has_role(763128748786450514)
+async def create_event(ctx):
+    em = discord.Embed(
+        title = "Please enter the name of the event",
+        description = "Name: ",
+        color = default_color
+    )
+    em.set_author(name="Event Creation")
+    msg = await ctx.send(embed=em)
+    eventName = await client.wait_for('message')
+    em = discord.Embed(
+        title = "Please enter the description of the event",
+        description = f"Name: {eventName}\nDescription: ",
+        color = default_color
+    )
+    em.set_author(name="Event Creation")
+    await msg.edit(embed = em)
+    eventDescription = await client.wait_for('message')
+    em = discord.Embed(
+        title = "Please enter the Date and Time of the event",
+        description = f"Name: {eventName}\nDescription: {eventDescription}\nDateTime: ",
+        color = default_color
+    )
+    em.set_author(name="Event Creation")
+    await msg.edit(embed = em)
+
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
