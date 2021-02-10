@@ -453,7 +453,7 @@ async def create_event(ctx):
         color = default_color
     )
     em.set_author(name="Event Creation")
-    msg = await ctx.send(embed=em)
+    msg_embed = await ctx.send(embed=em)
     msg = await client.wait_for('message', check=check)
     eventName = msg.content
 
@@ -463,7 +463,7 @@ async def create_event(ctx):
         color = default_color
     )
     em.set_author(name="Event Creation")
-    await msg.edit(embed = em)
+    await msg_embed.edit(embed = em)
     msg = await client.wait_for('message', check=check)
     eventDescription = msg.content
 
@@ -473,7 +473,7 @@ async def create_event(ctx):
         color = default_color
     )
     em.set_author(name="Event Creation")
-    await msg.edit(embed = em)
+    await msg_embed.edit(embed = em)
 
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
