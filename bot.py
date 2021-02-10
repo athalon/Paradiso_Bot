@@ -5,6 +5,7 @@ from discord.utils import get
 from discord.ext import commands
 from time import sleep as sl
 import os
+import datetime
 import keep_alive
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -440,55 +441,74 @@ async def unban(ctx, id: int):
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Event Creation
+''' Event
+- _id: int PRIMARY KEY
+- startTime : dateTime
+- endTime : dateTime
+- host : userId (int) FOREIGN KEY
+- auxillaryMembers : [userId] FOREIGN KEYS
+- name : string
+- joinedMembers : [userId] FOREIGN KEYS
+- description : string '''
 
 @client.command()
 @commands.has_role(763128748786450514)
-async def create_event(ctx):
+async def create_event(ctx, name, *, description):
     def check(msg):
         return msg.author == ctx.author and msg.channel == ctx.channel
     
-    def aux_mem_check(msg):
-        return msg.author == ctx.author and msg.channel == ctx.channel and msg.message.mentions
-    
     em = discord.Embed(
-        title = "Please enter the name of the event",
-        description = "Name: ",
+        title = "Please enter the starting date for the event (yyyy-mm-dd)",
+        description = f"Name: {name}\nDescription: {description}\nStarting datetime: ",
         color = default_color
     )
     em.set_author(name="Event Creation")
     msg_embed = await ctx.send(embed=em)
     msg = await client.wait_for('message', check=check)
-    eventName = msg.content
-
+    year, month, day = msg.content.split('-')
+    await msg.delete()
     em = discord.Embed(
-        title = "Please enter the description of the event",
-        description = f"Name: {eventName}\nDescription: ",
+        title = "Please enter the starting time for the event (hh:mm)",
+        description = f"Name: {name}\nDescription: {description}\nStarting datetime: ",
         color = default_color
     )
     em.set_author(name="Event Creation")
     await msg_embed.edit(embed = em)
     msg = await client.wait_for('message', check=check)
-    eventDescription = msg.content
+    hours, minutes = msg.content.split(':')
+    
+    startTime = datetime(year, month, day, hours, minutes)
 
     em = discord.Embed(
-        title = "Please enter any auxillary members of the event",
-        description = f"Name: {eventName}\nDescription: {eventDescription}\nAuxillary Members: ",
+        title = "Please enter the ending date for the event (yyyy-mm-dd)",
+        description = f"Name: {name}\nDescription: {description}\nStarting datetime: {startTime}\nEnding datetime: ",
         color = default_color
     )
     em.set_author(name="Event Creation")
     await msg_embed.edit(embed = em)
-    msg = await client.wait_for('message', check=aux_mem_check)
-    auxillaryMembers = msg.mentions
-
+    msg = await client.wait_for('message', check=check)
+    year, month, day = msg.content.split('-')
+    await msg.delete()
     em = discord.Embed(
-        title = "Done!",
-        description = f"Name: {eventName}\nDescription: {eventDescription}\nAuxillary Members: {auxillaryMembers}",
+        title = "Please enter the ending time for the event (hh:mm)",
+        description = f"Name: {name}\nDescription: {description}\nStarting datetime: {startTime}\nEnding datetime: ",
         color = default_color
     )
     em.set_author(name="Event Creation")
     await msg_embed.edit(embed = em)
+    msg = await client.wait_for('message', check=check)
+    hours, minutes = msg.content.split(':')
+    await msg.delete()
+    
+    endTime = datetime(year, month, day, hours, minutes)
 
+    em = discord.Embed(
+        title = "Setup complete!",
+        description = f"Name: {name}\nDescription: {description}\nStarting datetime: {startTime}\nEnding datetime: {endTime}\nHost: {ctx.message.author.mention}",
+        color = default_color
+    )
+    em.set_author(name="Event Creation")
+    await msg_embed.edit(embed = em)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
