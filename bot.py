@@ -1,5 +1,6 @@
 # Import needed libraries:
 import discord
+from replit import db
 from discord.utils import get
 from discord.ext import commands
 from time import sleep as sl
