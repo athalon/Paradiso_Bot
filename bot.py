@@ -439,11 +439,14 @@ async def unban(ctx, id: int):
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Event Creation#
+# Event Creation
 
 @client.command()
 @commands.has_role(763128748786450514)
 async def create_event(ctx):
+    def check(msg):
+        return msg.author == ctx.author and msg.channel == ctx.channel
+    
     em = discord.Embed(
         title = "Please enter the name of the event",
         description = "Name: ",
@@ -451,7 +454,9 @@ async def create_event(ctx):
     )
     em.set_author(name="Event Creation")
     msg = await ctx.send(embed=em)
-    eventName = await client.wait_for('message')
+    msg = await client.wait_for('message', check=check)
+    eventName = msg.content
+
     em = discord.Embed(
         title = "Please enter the description of the event",
         description = f"Name: {eventName}\nDescription: ",
@@ -459,7 +464,9 @@ async def create_event(ctx):
     )
     em.set_author(name="Event Creation")
     await msg.edit(embed = em)
-    eventDescription = await client.wait_for('message')
+    msg = await client.wait_for('message', check=check)
+    eventDescription = msg.content
+
     em = discord.Embed(
         title = "Please enter the Date and Time of the event",
         description = f"Name: {eventName}\nDescription: {eventDescription}\nDateTime: ",
