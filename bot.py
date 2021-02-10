@@ -447,6 +447,9 @@ async def create_event(ctx):
     def check(msg):
         return msg.author == ctx.author and msg.channel == ctx.channel
     
+    def aux_mem_check(msg):
+        return msg.author == ctx.author and msg.channel == ctx.channel and msg.message.mentions
+    
     em = discord.Embed(
         title = "Please enter the name of the event",
         description = "Name: ",
@@ -468,8 +471,18 @@ async def create_event(ctx):
     eventDescription = msg.content
 
     em = discord.Embed(
-        title = "Please enter the Date and Time of the event",
-        description = f"Name: {eventName}\nDescription: {eventDescription}\nDateTime: ",
+        title = "Please enter any auxillary members of the event",
+        description = f"Name: {eventName}\nDescription: {eventDescription}\nAuxillary Members: ",
+        color = default_color
+    )
+    em.set_author(name="Event Creation")
+    await msg_embed.edit(embed = em)
+    msg = await client.wait_for('message', check=aux_mem_check)
+    auxillaryMembers = msg.mentions
+
+    em = discord.Embed(
+        title = "Done!",
+        description = f"Name: {eventName}\nDescription: {eventDescription}\nAuxillary Members: {auxillaryMembers}",
         color = default_color
     )
     em.set_author(name="Event Creation")
