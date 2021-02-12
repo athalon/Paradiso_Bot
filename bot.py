@@ -473,7 +473,7 @@ async def create_event(ctx, name, *, description):
         color = default_color
     )
     em.set_author(name="Event Creation")
-    msg_embed.edit(embed = em)
+    await msg_embed.edit(embed = em)
     msg = await client.wait_for('message', check=check)
     hours, minutes = msg.content.split(':')
     
@@ -495,7 +495,7 @@ async def create_event(ctx, name, *, description):
         color = default_color
     )
     em.set_author(name="Event Creation")
-    msg_embed.edit(embed = em)
+    await msg_embed.edit(embed = em)
     msg = await client.wait_for('message', check=check)
     hours, minutes = msg.content.split(':')
     await msg.delete()
@@ -508,7 +508,7 @@ async def create_event(ctx, name, *, description):
         color = default_color
     )
     em.set_author(name="Event Creation")
-    msg_embed.edit(embed = em)
+    await msg_embed.edit(embed = em)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
