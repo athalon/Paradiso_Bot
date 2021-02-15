@@ -85,6 +85,18 @@ async def change_prefix(ctx, new_prefix='p!'):
         )
         embed.set_footer(text=footer)
 
+@help.command()
+async def change_prefix(ctx):
+    em = discord.Embed(
+        title = "Change prefix",
+        description = "Changes the prefix",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}change_prefix <prefix>", inline=False)
+    em.add_field(name="**Required Permissions**", value="Admin", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
+
 # Shuts the bot down
 @client.command(description="Shuts the bot off (Admin only)")
 @commands.has_permissions(administrator=True)
@@ -111,6 +123,18 @@ async def shutdown(ctx):
         embed.set_footer(text=footer)
         await ctx.send(embed=embed)
 
+@help.command()
+async def shutdown(ctx):
+    em = discord.Embed(
+        title = "Shutdown",
+        description = "Shuts the bot off",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}shutdown", inline=False)
+    em.add_field(name="**Required Permissions**", value="Admin", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Commands
@@ -127,31 +151,6 @@ async def test(ctx):
     await ctx.send(embed=embed)
     await ctx.send('Test successful!')
 
-# Command to get the latency(ping) of the bot/api
-@client.command(description="Displays the bot's latency(ping)")
-async def ping(ctx):
-    embed = discord.Embed(
-        title = "Ping",
-        description = f':ping_pong:Pong!\n```ini\n[{round(client.latency * 1000)}ms]\n```',
-        color = default_color
-    )
-    embed.set_footer(text=footer)
-    await ctx.send(embed=embed)
-
-
-
-@client.group(invoke_without_command=True)
-async def help(ctx):
-    em = discord.Embed(
-        title = "Help",
-        description = f"Use {prefix}help <command> for more info on a specific command.",
-        color = default_color
-    )
-    em.add_field(name=":gear:Config:gear:", value="change_prefix, shutdown", inline=False)
-    em.add_field(name=":gem:General:gem:", value="test, ping", inline=False)
-    em.add_field(name=":hammer:Moderation:hammer:", value="mute, unmute, kick, ban, unban", inline=False)
-    await ctx.send(embed=em)
-
 @help.command()
 async def test(ctx):
     em = discord.Embed(
@@ -163,6 +162,17 @@ async def test(ctx):
     em.add_field(name="**Required Permissions**", value="None", inline=False)
     em.set_footer(text=footer)
     await ctx.send(embed=em)
+
+# Command to get the latency(ping) of the bot/api
+@client.command(description="Displays the bot's latency(ping)")
+async def ping(ctx):
+    embed = discord.Embed(
+        title = "Ping",
+        description = f':ping_pong:Pong!\n```ini\n[{round(client.latency * 1000)}ms]\n```',
+        color = default_color
+    )
+    embed.set_footer(text=footer)
+    await ctx.send(embed=embed)
 
 @help.command()
 async def ping(ctx):
@@ -176,100 +186,16 @@ async def ping(ctx):
     em.set_footer(text=footer)
     await ctx.send(embed=em)
 
-@help.command()
-async def server(ctx):
+@client.group(invoke_without_command=True)
+async def help(ctx):
     em = discord.Embed(
-        title = "Server",
-        description = "Displays the server invite",
+        title = "Help",
+        description = f"Use {prefix}help <command> for more info on a specific command.",
         color = default_color
     )
-    em.add_field(name = "**Syntax**", value=f"{prefix}server", inline=False)
-    em.add_field(name="**Required Permissions**", value="None", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def mute(ctx):
-    em = discord.Embed(
-        title = "Mute",
-        description = "Mutes a member",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}mute <member> [reason]", inline=False)
-    em.add_field(name="**Required Permissions**", value="Manage Roles", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def unmute(ctx):
-    em = discord.Embed(
-        title = "Unmute",
-        description = "Unmutes a member",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}unmute <member>", inline=False)
-    em.add_field(name="**Required Permissions**", value="Manage Roles", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def kick(ctx):
-    em = discord.Embed(
-        title = "Kick",
-        description = "Kicks a member",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}kick <member> [reason]", inline=False)
-    em.add_field(name="**Required Permissions**", value="Kick members", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def ban(ctx):
-    em = discord.Embed(
-        title = "Ban",
-        description = "Bans a member",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}ban <member> [reason]", inline=False)
-    em.add_field(name="**Required Permissions**", value="Ban members", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def unban(ctx):
-    em = discord.Embed(
-        title = "Unban",
-        description = "Unbans a member",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}unban <member_id>", inline=False)
-    em.add_field(name="**Required Permissions**", value="Ban Members", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def change_prefix(ctx):
-    em = discord.Embed(
-        title = "Change prefix",
-        description = "Changes the prefix",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}change_prefix <prefix>", inline=False)
-    em.add_field(name="**Required Permissions**", value="Admin", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def shutdown(ctx):
-    em = discord.Embed(
-        title = "Shutdown",
-        description = "Shuts the bot off",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}shutdown", inline=False)
-    em.add_field(name="**Required Permissions**", value="Admin", inline=False)
-    em.set_footer(text=footer)
+    em.add_field(name=":gear:Config:gear:", value="change_prefix, shutdown", inline=False)
+    em.add_field(name=":gem:General:gem:", value="test, ping", inline=False)
+    em.add_field(name=":hammer:Moderation:hammer:", value="mute, unmute, kick, ban, unban", inline=False)
     await ctx.send(embed=em)
 
 @client.event
@@ -317,6 +243,18 @@ async def mute(ctx, member : discord.Member, *, reason='Not specified'):
         await ctx.send(embed=embed)
         await ctx.send("I can't mute bots :smile:")
 
+@help.command()
+async def mute(ctx):
+    em = discord.Embed(
+        title = "Mute",
+        description = "Mutes a member",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}mute <member> [reason]", inline=False)
+    em.add_field(name="**Required Permissions**", value="Manage Roles", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
+
 # Unmutes a member
 @client.command(description="Unmutes a member (Moderator only)")
 @commands.has_guild_permissions(manage_roles=True)
@@ -356,6 +294,18 @@ async def unmute(ctx, member : discord.Member):
         embed.set_footer(text=footer)
         await ctx.send(embed=embed)
 
+@help.command()
+async def unmute(ctx):
+    em = discord.Embed(
+        title = "Unmute",
+        description = "Unmutes a member",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}unmute <member>", inline=False)
+    em.add_field(name="**Required Permissions**", value="Manage Roles", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
+
 # Kicks a member
 @client.command(description="Kicks a member (Moderator only)")
 @commands.has_guild_permissions(kick_members=True)
@@ -385,6 +335,18 @@ async def kick(ctx, member : discord.Member, *, reason="Not specified"):
         embed.set_footer(text=footer)
         await ctx.send(embed=embed)
         await ctx.send("I can't kick bots :smile:")
+
+@help.command()
+async def kick(ctx):
+    em = discord.Embed(
+        title = "Kick",
+        description = "Kicks a member",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}kick <member> [reason]", inline=False)
+    em.add_field(name="**Required Permissions**", value="Kick members", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
 
 # Kicks a member
 @client.command(description="Bans a member (Moderator only)")
@@ -416,6 +378,18 @@ async def ban(ctx, member : discord.Member, *, reason="Not specified"):
         await ctx.send(embed=embed)
         await ctx.send("I can't kick bots :smile:")
 
+@help.command()
+async def ban(ctx):
+    em = discord.Embed(
+        title = "Ban",
+        description = "Bans a member",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}ban <member> [reason]", inline=False)
+    em.add_field(name="**Required Permissions**", value="Ban members", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
+
 # Unbanns a user
 @client.command(description="Unbans a member (Moderator only)")
 @commands.has_guild_permissions(ban_members=True)
@@ -438,6 +412,18 @@ async def unban(ctx, id: int):
         )
         embed.set_footer(text=footer)
         await ctx.send(embed=embed)
+
+@help.command()
+async def unban(ctx):
+    em = discord.Embed(
+        title = "Unban",
+        description = "Unbans a member",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}unban <member_id>", inline=False)
+    em.add_field(name="**Required Permissions**", value="Ban Members", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
