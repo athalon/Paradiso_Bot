@@ -521,13 +521,13 @@ def check_float(key):
     except ValueError:
         return False
 
-async def get_event(key):
+def get_event(key):
     if check_float(key): return SEvent.getEventFromDBById(db, float(key))
     else: return SEvent.getEventFromDBByName(db, key)
 
 @client.command()
 async def event(ctx, key):
-    event_obj = await get_event(key)
+    event_obj = get_event(key)
     host = client.get_user(event_obj.host)
     auxMembers = ""
     for member in event_obj.auxillaryMembers:
