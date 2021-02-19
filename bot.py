@@ -500,7 +500,15 @@ async def create_event(ctx, name, *, description):
     await msg_embed.edit(embed = em)
     event = SEvent.SEvent(startTime, endTime, ctx.message.author.id, name, db, ctx.message.mentions, [], description)
     event.updateDBEntry()
-		
+
+@client.command()
+@commands.has_role(808424137357787136) # Check if user is Bot dev
+async def db_dump(ctx):
+    msg = ""
+    for key in db.keys():
+        msg += f"{key} : {db[key]}\n"
+    await ctx.send(msg)
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Running and hosting
