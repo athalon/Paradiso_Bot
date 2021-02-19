@@ -450,6 +450,7 @@ async def create_event(ctx, name, *, description):
         color = default_color
     )
     em.set_author(name="Event Creation")
+    em.set_footer(text=footer)
     msg_embed = await ctx.send(embed=em)
     msg = await client.wait_for('message', check=check)
     year, month, day = msg.content.split('-')
@@ -460,6 +461,7 @@ async def create_event(ctx, name, *, description):
         color = default_color
     )
     em.set_author(name="Event Creation")
+    em.set_footer(text=footer)
     await msg_embed.edit(embed = em)
     msg = await client.wait_for('message', check=check)
     hours, minutes = msg.content.split(':')
@@ -473,6 +475,7 @@ async def create_event(ctx, name, *, description):
         color = default_color
     )
     em.set_author(name="Event Creation")
+    em.set_footer(text=footer)
     msg_embed = await ctx.send(embed=em)
     msg = await client.wait_for('message', check=check)
     year, month, day = msg.content.split('-')
@@ -483,6 +486,7 @@ async def create_event(ctx, name, *, description):
         color = default_color
     )
     em.set_author(name="Event Creation")
+    em.set_footer(text=footer)
     await msg_embed.edit(embed = em)
     msg = await client.wait_for('message', check=check)
     hours, minutes = msg.content.split(':')
@@ -497,6 +501,7 @@ async def create_event(ctx, name, *, description):
         color = default_color
     )
     em.set_author(name="Event Creation")
+    em.set_footer(text=footer)
     await msg_embed.edit(embed = em)
     event = SEvent.SEvent(startTime, endTime, ctx.message.author.id, name, db, ctx.message.mentions, [], description)
     event.updateDBEntry()
@@ -509,6 +514,31 @@ async def db_dump(ctx):
         msg += f"{key} : {db[key]}\n"
     await ctx.send(msg)
 
+async def get_event(key):
+    if key.isnumeric(): return SEvent.getEventFromDBById(db, int(key))
+    else: return SEvent.getEventFromDBById(db, key)
+
+@client.command()
+async def event(ctx, key):
+    event_obj = await get_event(key)
+    host = client.get_user(event_obj.host)
+    auxMembers = ""
+    for member in event_obj.auxillaryMembers:
+        auxMembers += str(client.get_user(member)) + ','
+    em = discord.Embed(
+        title = "Event Details",
+        description = f"""Name: {event_obj.name}
+        Description: {event_obj.description}
+        Host: {host}
+        Auxillary Members: {auxMembers}
+        Joined Members: {len(event_obj.joinedMembers)}
+        Starting datetime: {event_obj.startTime}
+        Ending datetime: {event_obj.endTime}
+        ID: {event_obj._id}""",
+        color = default_color
+    )
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Running and hosting
