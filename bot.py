@@ -7,6 +7,7 @@ from time import sleep as sl
 import os
 import datetime
 import keep_alive
+import SEvent
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -438,7 +439,7 @@ async def unban(ctx):
 - description : string '''
 
 @client.command()
-@commands.has_role(763128748786450514)
+@commands.has_role(763128748786450514) # Check if user is staff
 async def create_event(ctx, name, *, description):
     def check(msg):
         return msg.author == ctx.author and msg.channel == ctx.channel
@@ -495,7 +496,8 @@ async def create_event(ctx, name, *, description):
     )
     em.set_author(name="Event Creation")
     await msg_embed.edit(embed = em)
-
+    event = SEvent.SEvent(startTime, endTime, ctx.message.author.id, name, db, ctx.message.mentions, [], description)
+    event.updateDBEntry()
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Running and hosting
