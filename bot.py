@@ -430,8 +430,8 @@ async def unban(ctx):
 
 ''' Event
 - _id: int PRIMARY KEY
-- startTime : dateTime
-- endTime : dateTime
+- startTime : datetime (str)
+- endTime : datetime (str)
 - host : userId (int) FOREIGN KEY
 - auxillaryMembers : [userId] FOREIGN KEYS
 - name : string
@@ -464,7 +464,8 @@ async def create_event(ctx, name, *, description):
     msg = await client.wait_for('message', check=check)
     hours, minutes = msg.content.split(':')
     
-    startTime = datetime(year, month, day, hours, minutes)
+    startTime = datetime.datetime(int(year), int(month), int(day), int(hours), int(minutes))
+    startTime = startTime.strftime("%m-%d-%Y %H:%M:%S")
 
     em = discord.Embed(
         title = "Please enter the ending date for the event (yyyy-mm-dd)",
@@ -487,7 +488,8 @@ async def create_event(ctx, name, *, description):
     hours, minutes = msg.content.split(':')
     await msg.delete()
     
-    endTime = datetime(year, month, day, hours, minutes)
+    endTime = datetime.datetime(int(year), int(month), int(day), int(hours), int(minutes))
+    endTime = endTime.strftime("%m-%d-%Y %H:%M:%S")
 
     em = discord.Embed(
         title = "Setup complete!",
@@ -498,6 +500,7 @@ async def create_event(ctx, name, *, description):
     await msg_embed.edit(embed = em)
     event = SEvent.SEvent(startTime, endTime, ctx.message.author.id, name, db, ctx.message.mentions, [], description)
     event.updateDBEntry()
+		
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Running and hosting
