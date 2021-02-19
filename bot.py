@@ -7,7 +7,7 @@ from time import sleep as sl
 import os
 import datetime
 import keep_alive
-import SEvent
+from SEvent import SEvent
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -206,7 +206,7 @@ async def on_member_join(member):
         description = f"Welcome {str(member)} to Paradise! We hope you have a great stay",
         color = default_color
     )
-    embed.add_footer(text="Paradiso Bot | Made by: athalon#8654")
+    embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
     await client.get_channel(763093985110786088).send(embed=embed)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -515,8 +515,8 @@ async def db_dump(ctx):
     await ctx.send(msg)
 
 async def get_event(key):
-    if key.isnumeric(): return SEvent.getEventFromDBById(db, int(key))
-    else: return SEvent.getEventFromDBById(db, key)
+    if key.isnumeric(): return SEvent.getEventFromDBById(db, float(key))
+    else: return SEvent.getEventFromDBByName(db, key)
 
 @client.command()
 async def event(ctx, key):
