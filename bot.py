@@ -57,6 +57,18 @@ async def on_message(message):
         await message.channel.send(embed=embed)
     await client.process_commands(message)
 
+@client.group(invoke_without_command=True)
+async def help(ctx):
+    em = discord.Embed(
+        title = "Help",
+        description = f"Use {prefix}help <command> for more info on a specific command.",
+        color = default_color
+    )
+    em.add_field(name=":gear:Config:gear:", value="change_prefix, shutdown", inline=False)
+    em.add_field(name=":gem:General:gem:", value="test, ping", inline=False)
+    em.add_field(name=":hammer:Moderation:hammer:", value="mute, unmute, kick, ban, unban", inline=False)
+    await ctx.send(embed=em)
+
 # Changes the prefix of the bot and writes it to the prefix file
 @client.command(description="Changes the prefix (Admin only)")
 @commands.has_permissions(administrator=True)
@@ -185,18 +197,6 @@ async def ping(ctx):
     em.add_field(name = "**Syntax**", value=f"{prefix}ping", inline=False)
     em.add_field(name="**Required Permissions**", value="None", inline=False)
     em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@client.group(invoke_without_command=True)
-async def help(ctx):
-    em = discord.Embed(
-        title = "Help",
-        description = f"Use {prefix}help <command> for more info on a specific command.",
-        color = default_color
-    )
-    em.add_field(name=":gear:Config:gear:", value="change_prefix, shutdown", inline=False)
-    em.add_field(name=":gem:General:gem:", value="test, ping", inline=False)
-    em.add_field(name=":hammer:Moderation:hammer:", value="mute, unmute, kick, ban, unban", inline=False)
     await ctx.send(embed=em)
 
 @client.event
