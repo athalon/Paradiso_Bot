@@ -7,7 +7,7 @@ from time import sleep as sl
 import os
 import datetime
 import keep_alive
-from SEvent import SEvent
+import SEvent
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -522,8 +522,8 @@ def check_float(key):
         return False
 
 def get_event(key):
-    if check_float(key): return SEvent.getEventFromDBById(db, float(key))
-    else: return SEvent.getEventFromDBByName(db, key)
+    if check_float(key): return SEvent.SEvent.getEventFromDBById(db, float(key))
+    else: return SEvent.SEvent.getEventFromDBByName(db, key)
 
 @client.command()
 async def event(ctx, key):
