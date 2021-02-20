@@ -514,7 +514,7 @@ async def db_dump(ctx):
         msg += f"{key} : {db[key]}\n"
     await ctx.send(msg)
 
-def check_float(key):
+def isFloat(key):
     try:
         float(key)
         return True
@@ -522,7 +522,7 @@ def check_float(key):
         return False
 
 def get_event(key):
-    if check_float(key): return SEvent.SEvent.getEventFromDBById(db, float(key))
+    if isFloat(key): return SEvent.SEvent.getEventFromDBById(db, float(key))
     else: return SEvent.SEvent.getEventFromDBByName(db, key)
 
 @client.command()
