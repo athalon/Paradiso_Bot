@@ -514,6 +514,19 @@ async def db_dump(ctx):
         msg += f"{key} : {db[key]}\n"
     await ctx.send(msg)
 
+@client.command()
+@commands.has_role(808424137357787136) # Check if user is Bot dev
+async def db_clear(ctx):
+    for key in db.keys():
+        del db[key]
+        await ctx.send("Database cleared!")
+
+@client.command()
+@commands.has_role(763128748786450514) # Check if user is staff
+async def delete_event(ctx, id):
+    del db[id]
+    await ctx.send("Event deleted!")
+
 def isFloat(key):
     try:
         float(key)
