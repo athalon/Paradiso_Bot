@@ -440,7 +440,7 @@ async def unban(ctx):
 
 @client.command()
 @commands.has_role(763128748786450514) # Check if user is staff
-async def create_event(ctx, name, *, description):
+async def create_event(ctx, name, description, *, auxMembers):
     def check(msg):
         return msg.author == ctx.author and msg.channel == ctx.channel
     
@@ -497,13 +497,13 @@ async def create_event(ctx, name, *, description):
 
     em = discord.Embed(
         title = "Setup complete!",
-        description = f"Name: {name}\nDescription: {description}\nStarting datetime: {startTime}\nEnding datetime: {endTime}\nHost: {ctx.message.author.mention}",
+        description = f"Name: {name}\nDescription: {description}\nStarting datetime: {startTime}\nEnding datetime: {endTime}\nHost: {ctx.message.author.mention}\nAuxillary Members: {auxMembers}",
         color = default_color
     )
     em.set_author(name="Event Creation")
     em.set_footer(text=footer)
     await msg_embed.edit(embed = em)
-    event = SEvent.SEvent(startTime, endTime, ctx.message.author.id, name, db, ctx.message.mentions, [], description)
+    event = SEvent.SEvent(startTime, endTime, ctx.message.author.id, name, db, auxMembers, [], description)
     event.updateDBEntry()
 
 @client.command()
