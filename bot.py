@@ -552,12 +552,9 @@ async def event(ctx, key):
 async def update_event(ctx, event_key, *, args):
     event_obj = get_event(event_key)
     key, value = args.split('=')
-    try:
-        setattr(event.obj, key, value)
-        event_obj.updateDBEntry()
-        await ctx.send("Event Updated!")
-    except:
-        ctx.send("Error!")
+    setattr(event.obj, key, value)
+    event_obj.updateDBEntry()
+    await ctx.send("Event Updated!")
     
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
