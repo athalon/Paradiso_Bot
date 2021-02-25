@@ -494,10 +494,10 @@ async def create_event(ctx, name, description, *, auxMembers):
     
     endTime = datetime.datetime(int(year), int(month), int(day), int(hours), int(minutes))
     endTime = endTime.strftime("%m-%d-%Y %H:%M:%S")
-
+    auxMembers = [member.id for member in auxMembers]
     em = discord.Embed(
         title = "Setup complete!",
-        description = f"Name: {name}\nDescription: {description}\nStarting datetime: {startTime}\nEnding datetime: {endTime}\nHost: {ctx.message.author.mention}\nAuxillary Members: {auxMembers}",
+        description = f"Name: {name}\nDescription: {description}\nStarting datetime: {startTime}\nEnding datetime: {endTime}\nHost: {ctx.message.author.mention}\nAuxillary Members: {[member.mention for member in auxMembers]}",
         color = default_color
     )
     em.set_author(name="Event Creation")
