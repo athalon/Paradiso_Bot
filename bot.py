@@ -429,7 +429,7 @@ async def unban(ctx):
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ''' Event
-- _id: int PRIMARY KEY
+- _id: float PRIMARY KEY
 - startTime : datetime (str)
 - endTime : datetime (str)
 - host : userId (int) FOREIGN KEY
@@ -546,6 +546,16 @@ async def event(ctx, key):
     )
     em.set_footer(text=footer)
     await ctx.send(embed=em)
+
+@client.command()
+@commands.has_role(763128748786450514) # Check if user is staff
+async def update_event(ctx, event_key, *args):
+    event_obj = get_event(event_key)
+    key, value = args.split('=')
+    if key in event_obj:
+        event.obj.key = value
+        event_obj.updateDBEntry()
+    
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Running and hosting
