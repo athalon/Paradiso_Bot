@@ -549,12 +549,15 @@ async def event(ctx, key):
 
 @client.command()
 @commands.has_role(763128748786450514) # Check if user is staff
-async def update_event(ctx, event_key, *args):
+async def update_event(ctx, event_key, *, args):
     event_obj = get_event(event_key)
     key, value = args.split('=')
-    if key in event_obj:
-        event.obj.key = value
+    try:
+        setattr(event.obj, key, value)
         event_obj.updateDBEntry()
+        await ctx.send("Event Updated!")
+    except:
+        ctx.send("Error!")
     
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
