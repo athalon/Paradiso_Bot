@@ -5,7 +5,9 @@ from discord.utils import get
 from discord.ext import commands
 from time import sleep as sl
 import os
+import datetime
 import keep_alive
+import SEvent
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -55,6 +57,18 @@ async def on_message(message):
         await message.channel.send(embed=embed)
     await client.process_commands(message)
 
+@client.group(invoke_without_command=True)
+async def help(ctx):
+    em = discord.Embed(
+        title = "Help",
+        description = f"Use {prefix}help <command> for more info on a specific command.",
+        color = default_color
+    )
+    em.add_field(name=":gear:Config:gear:", value="change_prefix, shutdown", inline=False)
+    em.add_field(name=":gem:General:gem:", value="test, ping", inline=False)
+    em.add_field(name=":hammer:Moderation:hammer:", value="mute, unmute, kick, ban, unban", inline=False)
+    await ctx.send(embed=em)
+
 # Changes the prefix of the bot and writes it to the prefix file
 @client.command(description="Changes the prefix (Admin only)")
 @commands.has_permissions(administrator=True)
@@ -84,6 +98,18 @@ async def change_prefix(ctx, new_prefix='p!'):
         )
         embed.set_footer(text=footer)
 
+@help.command()
+async def change_prefix(ctx):
+    em = discord.Embed(
+        title = "Change prefix",
+        description = "Changes the prefix",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}change_prefix <prefix>", inline=False)
+    em.add_field(name="**Required Permissions**", value="Admin", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
+
 # Shuts the bot down
 @client.command(description="Shuts the bot off (Admin only)")
 @commands.has_permissions(administrator=True)
@@ -110,6 +136,18 @@ async def shutdown(ctx):
         embed.set_footer(text=footer)
         await ctx.send(embed=embed)
 
+@help.command()
+async def shutdown(ctx):
+    em = discord.Embed(
+        title = "Shutdown",
+        description = "Shuts the bot off",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}shutdown", inline=False)
+    em.add_field(name="**Required Permissions**", value="Admin", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Commands
@@ -126,31 +164,6 @@ async def test(ctx):
     await ctx.send(embed=embed)
     await ctx.send('Test successful!')
 
-# Command to get the latency(ping) of the bot/api
-@client.command(description="Displays the bot's latency(ping)")
-async def ping(ctx):
-    embed = discord.Embed(
-        title = "Ping",
-        description = f':ping_pong:Pong!\n```ini\n[{round(client.latency * 1000)}ms]\n```',
-        color = default_color
-    )
-    embed.set_footer(text=footer)
-    await ctx.send(embed=embed)
-
-
-
-@client.group(invoke_without_command=True)
-async def help(ctx):
-    em = discord.Embed(
-        title = "Help",
-        description = f"Use {prefix}help <command> for more info on a specific command.",
-        color = default_color
-    )
-    em.add_field(name=":gear:Config:gear:", value="change_prefix, shutdown", inline=False)
-    em.add_field(name=":gem:General:gem:", value="test, ping", inline=False)
-    em.add_field(name=":hammer:Moderation:hammer:", value="mute, unmute, kick, ban, unban", inline=False)
-    await ctx.send(embed=em)
-
 @help.command()
 async def test(ctx):
     em = discord.Embed(
@@ -162,6 +175,17 @@ async def test(ctx):
     em.add_field(name="**Required Permissions**", value="None", inline=False)
     em.set_footer(text=footer)
     await ctx.send(embed=em)
+
+# Command to get the latency(ping) of the bot/api
+@client.command(description="Displays the bot's latency(ping)")
+async def ping(ctx):
+    embed = discord.Embed(
+        title = "Ping",
+        description = f':ping_pong:Pong!\n```ini\n[{round(client.latency * 1000)}ms]\n```',
+        color = default_color
+    )
+    embed.set_footer(text=footer)
+    await ctx.send(embed=embed)
 
 @help.command()
 async def ping(ctx):
@@ -175,102 +199,6 @@ async def ping(ctx):
     em.set_footer(text=footer)
     await ctx.send(embed=em)
 
-@help.command()
-async def server(ctx):
-    em = discord.Embed(
-        title = "Server",
-        description = "Displays the server invite",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}server", inline=False)
-    em.add_field(name="**Required Permissions**", value="None", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def mute(ctx):
-    em = discord.Embed(
-        title = "Mute",
-        description = "Mutes a member",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}mute <member> [reason]", inline=False)
-    em.add_field(name="**Required Permissions**", value="Manage Roles", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def unmute(ctx):
-    em = discord.Embed(
-        title = "Unmute",
-        description = "Unmutes a member",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}unmute <member>", inline=False)
-    em.add_field(name="**Required Permissions**", value="Manage Roles", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def kick(ctx):
-    em = discord.Embed(
-        title = "Kick",
-        description = "Kicks a member",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}kick <member> [reason]", inline=False)
-    em.add_field(name="**Required Permissions**", value="Kick members", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def ban(ctx):
-    em = discord.Embed(
-        title = "Ban",
-        description = "Bans a member",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}ban <member> [reason]", inline=False)
-    em.add_field(name="**Required Permissions**", value="Ban members", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def unban(ctx):
-    em = discord.Embed(
-        title = "Unban",
-        description = "Unbans a member",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}unban <member_id>", inline=False)
-    em.add_field(name="**Required Permissions**", value="Ban Members", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def change_prefix(ctx):
-    em = discord.Embed(
-        title = "Change prefix",
-        description = "Changes the prefix",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}change_prefix <prefix>", inline=False)
-    em.add_field(name="**Required Permissions**", value="Admin", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
-@help.command()
-async def shutdown(ctx):
-    em = discord.Embed(
-        title = "Shutdown",
-        description = "Shuts the bot off",
-        color = default_color
-    )
-    em.add_field(name = "**Syntax**", value=f"{prefix}shutdown", inline=False)
-    em.add_field(name="**Required Permissions**", value="Admin", inline=False)
-    em.set_footer(text=footer)
-    await ctx.send(embed=em)
-
 @client.event
 async def on_member_join(member):
     embed = discord.Embed(
@@ -278,7 +206,7 @@ async def on_member_join(member):
         description = f"Welcome {str(member)} to Paradise! We hope you have a great stay",
         color = default_color
     )
-    embed.add_footer(text="Paradiso Bot | Made by: athalon#8654")
+    embed.set_footer(text="Paradiso Bot | Made by: athalon#8654")
     await client.get_channel(763093985110786088).send(embed=embed)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -315,6 +243,18 @@ async def mute(ctx, member : discord.Member, *, reason='Not specified'):
         embed.set_footer(text=footer)
         await ctx.send(embed=embed)
         await ctx.send("I can't mute bots :smile:")
+
+@help.command()
+async def mute(ctx):
+    em = discord.Embed(
+        title = "Mute",
+        description = "Mutes a member",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}mute <member> [reason]", inline=False)
+    em.add_field(name="**Required Permissions**", value="Manage Roles", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
 
 # Unmutes a member
 @client.command(description="Unmutes a member (Moderator only)")
@@ -355,6 +295,18 @@ async def unmute(ctx, member : discord.Member):
         embed.set_footer(text=footer)
         await ctx.send(embed=embed)
 
+@help.command()
+async def unmute(ctx):
+    em = discord.Embed(
+        title = "Unmute",
+        description = "Unmutes a member",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}unmute <member>", inline=False)
+    em.add_field(name="**Required Permissions**", value="Manage Roles", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
+
 # Kicks a member
 @client.command(description="Kicks a member (Moderator only)")
 @commands.has_guild_permissions(kick_members=True)
@@ -384,6 +336,18 @@ async def kick(ctx, member : discord.Member, *, reason="Not specified"):
         embed.set_footer(text=footer)
         await ctx.send(embed=embed)
         await ctx.send("I can't kick bots :smile:")
+
+@help.command()
+async def kick(ctx):
+    em = discord.Embed(
+        title = "Kick",
+        description = "Kicks a member",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}kick <member> [reason]", inline=False)
+    em.add_field(name="**Required Permissions**", value="Kick members", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
 
 # Kicks a member
 @client.command(description="Bans a member (Moderator only)")
@@ -415,6 +379,18 @@ async def ban(ctx, member : discord.Member, *, reason="Not specified"):
         await ctx.send(embed=embed)
         await ctx.send("I can't kick bots :smile:")
 
+@help.command()
+async def ban(ctx):
+    em = discord.Embed(
+        title = "Ban",
+        description = "Bans a member",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}ban <member> [reason]", inline=False)
+    em.add_field(name="**Required Permissions**", value="Ban members", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
+
 # Unbanns a user
 @client.command(description="Unbans a member (Moderator only)")
 @commands.has_guild_permissions(ban_members=True)
@@ -438,45 +414,161 @@ async def unban(ctx, id: int):
         embed.set_footer(text=footer)
         await ctx.send(embed=embed)
 
+@help.command()
+async def unban(ctx):
+    em = discord.Embed(
+        title = "Unban",
+        description = "Unbans a member",
+        color = default_color
+    )
+    em.add_field(name = "**Syntax**", value=f"{prefix}unban <member_id>", inline=False)
+    em.add_field(name="**Required Permissions**", value="Ban Members", inline=False)
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Event Creation
+''' Event
+- _id: float PRIMARY KEY
+- startTime : datetime (str)
+- endTime : datetime (str)
+- host : userId (int) FOREIGN KEY
+- auxillaryMembers : [userId] FOREIGN KEYS
+- name : string
+- joinedMembers : [userId] FOREIGN KEYS
+- description : string '''
 
 @client.command()
-@commands.has_role(763128748786450514)
-async def create_event(ctx):
+@commands.has_role(763128748786450514) # Check if user is staff
+async def create_event(ctx, name, description, *, auxMembers):
     def check(msg):
         return msg.author == ctx.author and msg.channel == ctx.channel
     
     em = discord.Embed(
-        title = "Please enter the name of the event",
-        description = "Name: ",
+        title = "Please enter the starting date for the event (yyyy-mm-dd)",
+        description = f"Name: {name}\nDescription: {description}\nStarting datetime: ",
         color = default_color
     )
     em.set_author(name="Event Creation")
+    em.set_footer(text=footer)
     msg_embed = await ctx.send(embed=em)
     msg = await client.wait_for('message', check=check)
-    eventName = msg.content
-
+    year, month, day = msg.content.split('-')
+    await msg.delete()
     em = discord.Embed(
-        title = "Please enter the description of the event",
-        description = f"Name: {eventName}\nDescription: ",
+        title = "Please enter the starting time for the event (hh:mm)",
+        description = f"Name: {name}\nDescription: {description}\nStarting datetime: ",
         color = default_color
     )
     em.set_author(name="Event Creation")
+    em.set_footer(text=footer)
     await msg_embed.edit(embed = em)
     msg = await client.wait_for('message', check=check)
-    eventDescription = msg.content
+    hours, minutes = msg.content.split(':')
+    
+    startTime = datetime.datetime(int(year), int(month), int(day), int(hours), int(minutes))
+    startTime = startTime.strftime("%m-%d-%Y %H:%M:%S")
 
     em = discord.Embed(
-        title = "Please enter the Date and Time of the event",
-        description = f"Name: {eventName}\nDescription: {eventDescription}\nDateTime: ",
+        title = "Please enter the ending date for the event (yyyy-mm-dd)",
+        description = f"Name: {name}\nDescription: {description}\nStarting datetime: {startTime}\nEnding datetime: ",
         color = default_color
     )
     em.set_author(name="Event Creation")
+    em.set_footer(text=footer)
+    msg_embed = await ctx.send(embed=em)
+    msg = await client.wait_for('message', check=check)
+    year, month, day = msg.content.split('-')
+    await msg.delete()
+    em = discord.Embed(
+        title = "Please enter the ending time for the event (hh:mm)",
+        description = f"Name: {name}\nDescription: {description}\nStarting datetime: {startTime}\nEnding datetime: ",
+        color = default_color
+    )
+    em.set_author(name="Event Creation")
+    em.set_footer(text=footer)
     await msg_embed.edit(embed = em)
+    msg = await client.wait_for('message', check=check)
+    hours, minutes = msg.content.split(':')
+    await msg.delete()
+    
+    endTime = datetime.datetime(int(year), int(month), int(day), int(hours), int(minutes))
+    endTime = endTime.strftime("%m-%d-%Y %H:%M:%S")
+    auxMembers = [member.id for member in auxMembers]
+    em = discord.Embed(
+        title = "Setup complete!",
+        description = f"Name: {name}\nDescription: {description}\nStarting datetime: {startTime}\nEnding datetime: {endTime}\nHost: {ctx.message.author.mention}\nAuxillary Members: {[member.mention for member in auxMembers]}",
+        color = default_color
+    )
+    em.set_author(name="Event Creation")
+    em.set_footer(text=footer)
+    await msg_embed.edit(embed = em)
+    event = SEvent.SEvent(startTime, endTime, ctx.message.author.id, name, db, auxMembers, [], description)
+    event.updateDBEntry()
 
+@client.command()
+@commands.has_role(808424137357787136) # Check if user is Bot dev
+async def db_dump(ctx):
+    msg = ""
+    for key in db.keys():
+        msg += f"{key} : {db[key]}\n"
+    await ctx.send(msg)
 
+@client.command()
+@commands.has_role(808424137357787136) # Check if user is Bot dev
+async def db_clear(ctx):
+    for key in db.keys():
+        del db[key]
+        await ctx.send("Database cleared!")
+
+@client.command()
+@commands.has_role(763128748786450514) # Check if user is staff
+async def delete_event(ctx, id):
+    del db[id]
+    await ctx.send("Event deleted!")
+
+def isFloat(key):
+    try:
+        float(key)
+        return True
+    except ValueError:
+        return False
+
+def get_event(key):
+    if isFloat(key): return SEvent.SEvent.getEventFromDBById(db, float(key))
+    else: return SEvent.SEvent.getEventFromDBByName(db, key)
+
+@client.command()
+async def event(ctx, key):
+    event_obj = get_event(key)
+    host = client.get_user(event_obj.host)
+    auxMembers = ""
+    for member in event_obj.auxillaryMembers:
+        auxMembers += str(client.get_user(member)) + ','
+    em = discord.Embed(
+        title = "Event Details",
+        description = f"""Name: {event_obj.name}
+        Description: {event_obj.description}
+        Host: {host}
+        Auxillary Members: {auxMembers}
+        Joined Members: {len(event_obj.joinedMembers)}
+        Starting datetime: {event_obj.startTime}
+        Ending datetime: {event_obj.endTime}
+        ID: {event_obj._id}""",
+        color = default_color
+    )
+    em.set_footer(text=footer)
+    await ctx.send(embed=em)
+
+@client.command()
+@commands.has_role(763128748786450514) # Check if user is staff
+async def update_event(ctx, event_key, *, args):
+    event_obj = get_event(event_key)
+    key, value = args.split('=')
+    setattr(event.obj, key, value)
+    event_obj.updateDBEntry()
+    await ctx.send("Event Updated!")
+    
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Running and hosting
