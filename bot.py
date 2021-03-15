@@ -1,4 +1,5 @@
 # Import needed libraries:
+from attr import __description__
 import discord
 from discord.utils import get
 from discord.ext import commands
@@ -135,7 +136,16 @@ async def ping(ctx):
     embed.set_footer(text=footer)
     await ctx.send(embed=embed)
 
-
+@client.command()
+async def sex(ctx):
+    nick_user = client.fetch_user(458078088069251072)
+    em = discord.Embed(
+        title = "Sex!",
+        description = f"{ctx.author.mention} has requested violent gay sex with {nick_user.mention}",
+        color = default_color
+    )
+    em.set_footer(text=footer)
+    await ctx.send(nick_user.mention, embed = em)
 
 @client.group(invoke_without_command=True)
 async def help(ctx):
@@ -145,8 +155,20 @@ async def help(ctx):
         color = default_color
     )
     em.add_field(name=":gear:Config:gear:", value="change_prefix, shutdown", inline=False)
-    em.add_field(name=":gem:General:gem:", value="test, ping", inline=False)
+    em.add_field(name=":gem:General:gem:", value="test, ping, sex", inline=False)
     em.add_field(name=":hammer:Moderation:hammer:", value="mute, unmute, kick, ban, unban", inline=False)
+    await ctx.send(embed=em)
+
+@help.command()
+async def sex(ctx):
+    em = discord.Embed(
+        title = "Sex",
+        description = "See for yourself ;)",
+        color = default_color
+    )
+    em.add_field(name="Syntax", value=f"{prefix}sex", inline=False)
+    em.add_field(name="Required Permissions", value="None", inline=False)
+    em.set_footer(text=footer)
     await ctx.send(embed=em)
 
 @help.command()
