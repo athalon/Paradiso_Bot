@@ -39,7 +39,7 @@ async def on_ready():
         prefix_file.close()
     except:
         pass
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=f"{client.command_prefix}help"))
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=f"{client.command_prefix}help                                 also, type p!sex ;)"))
     print('Bot is ready!')
 
 @client.event
