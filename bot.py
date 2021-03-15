@@ -138,7 +138,7 @@ async def ping(ctx):
 
 @client.command()
 async def sex(ctx):
-    nick_user = client.fetch_user(458078088069251072)
+    nick_user = await client.fetch_user(458078088069251072)
     em = discord.Embed(
         title = "Sex!",
         description = f"{ctx.author.mention} has requested violent gay sex with {nick_user.mention}",
